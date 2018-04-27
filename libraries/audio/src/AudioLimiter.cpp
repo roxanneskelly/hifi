@@ -7,7 +7,6 @@
 //
 
 #include <assert.h>
-#include <stdlib.h>
 
 #include "AudioDynamics.h"
 #include "AudioLimiter.h"
