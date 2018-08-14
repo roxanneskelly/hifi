@@ -156,25 +156,7 @@ Column {
         onCurrentIndexChanged: {
             if (root.autoScrollTimerEnabled) {
                 autoScrollTimer.interval = suggestions.get(scroll.currentIndex).time_before_autoscroll_ms;
-                if (!feedMouseArea.containsMouse) {
-                    autoScrollTimer.start();
-                }
-            }
-        }
-
-        MouseArea {
-            id: feedMouseArea;
-            enabled: root.autoScrollTimerEnabled;
-            anchors.fill: parent;
-            hoverEnabled: true;
-            propagateComposedEvents: true;
-            onEntered: {
-                if (autoScrollTimer.running) {
-                    autoScrollTimer.stop();
-                }
-            }
-            onExited: {
-                autoScrollTimer.restart();
+                autoScrollTimer.start();
             }
         }
     }
