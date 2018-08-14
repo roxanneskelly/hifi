@@ -141,8 +141,14 @@ Column {
             textSizeSmall: root.textSizeSmall;
             stackShadowNarrowing: root.stackShadowNarrowing;
             shadowHeight: root.stackedCardShadowHeight;
-            hoverThunk: function () { hovered = true }
-            unhoverThunk: function () { hovered = false }
+            hoverThunk: function () { 
+                hovered = true;
+                autoScrollTimer.stop();
+			}
+            unhoverThunk: function () { 
+                hovered = false;
+                autoScrollTimer.start();
+            }
         }
 
         onCountChanged: {
