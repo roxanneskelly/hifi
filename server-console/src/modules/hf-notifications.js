@@ -12,8 +12,8 @@ const buildInfo = GetBuildInfo();
 const osType = os.type();
 
 const notificationIcon = path.join(__dirname, '../../resources/console-notification.png');
-const STORIES_NOTIFICATION_POLL_TIME_MS = 120 * 1000;
-const PEOPLE_NOTIFICATION_POLL_TIME_MS = 120 * 1000;
+const STORIES_NOTIFICATION_POLL_TIME_MS = 600 * 1000;
+const PEOPLE_NOTIFICATION_POLL_TIME_MS = 600 * 1000;
 const WALLET_NOTIFICATION_POLL_TIME_MS = 600 * 1000;
 const MARKETPLACE_NOTIFICATION_POLL_TIME_MS = 600 * 1000;
 const OSX_CLICK_DELAY_TIMEOUT = 500;
@@ -24,7 +24,8 @@ const STORIES_URL= '/api/v1/user_stories';
 const USERS_URL= '/api/v1/users';
 const ECONOMIC_ACTIVITY_URL= '/api/v1/commerce/history';
 const UPDATES_URL= '/api/v1/commerce/available_updates';
-const MAX_NOTIFICATION_ITEMS=30
+const MAX_NOTIFICATION_ITEMS=3
+const CONNECTIONS_PAGE_SIZE=30;
 const STARTUP_MAX_NOTIFICATION_ITEMS=1
 
 
@@ -414,7 +415,7 @@ HifiNotifications.prototype = {
                 'filter=connections',
                 'status=online',
                 'page=1',
-                'per_page=' + MAX_NOTIFICATION_ITEMS
+                'per_page=' + CONNECTIONS_PAGE_SIZE
             ];
             console.log("Polling for connections");
             var url = METAVERSE_SERVER_URL + USERS_URL + '?' + options.join('&');
@@ -462,7 +463,7 @@ HifiNotifications.prototype = {
                 }
 
                 if (newUsers.size >= maxNotificationItemCount) {
-                    _this._addNotification(new HifiNotification(NotificationType.PEOPLE, newUsers.size));
+                    _this._addNotification(new HifiNotification(NotificationType.PEOPLE, content.total_entries));
                     return;
                 }
                 newUsers.forEach(function (user) {
