@@ -29,6 +29,7 @@ ClientTraitsHandler::ClientTraitsHandler(AvatarData* owningAvatar) :
     });
 
     nodeList->getPacketReceiver().registerListener(PacketType::SetAvatarTraits, this, "processTraitOverride");
+    nodeList->getPacketReceiver().registerListener(PacketType::SetAvatarTraitsAck, this, "processSetAvatarTraitsAck");
 }
 
 void ClientTraitsHandler::markTraitUpdated(AvatarTraits::TraitType updatedTrait) {
@@ -68,7 +69,7 @@ void ClientTraitsHandler::resetForNewMixer() {
 void ClientTraitsHandler::sendChangedTraitsToMixer() {
     std::unique_lock<Mutex> lock(_traitLock);
 
-    if (hasChangedTraits() || _shouldPerformInitialSend) {
+    if (hasChangedTraits() || _shouldPerformInitialSend || (_currentTraitVersion == _ackedTraitVersion)) {
         // we have at least one changed trait to send
 
         auto nodeList = DependencyManager::get<NodeList>();
@@ -174,4 +175,9 @@ void ClientTraitsHandler::processTraitOverride(QSharedPointer<ReceivedMessage> m
             }
         }
     }
+}
+
+
+void ClientTraitsHandler::processSetAvatarTraitsAck(QSharedPointer<ReceivedMessage> message, SharedNodePointer sendingNode) {
+    message->readPrimitive(&_ackedTraitVersion);
 }

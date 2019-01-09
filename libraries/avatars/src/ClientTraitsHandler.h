@@ -36,6 +36,7 @@ public:
 
 public slots:
     void processTraitOverride(QSharedPointer<ReceivedMessage> message, SharedNodePointer sendingNode);
+    void processSetAvatarTraitsAck(QSharedPointer<ReceivedMessage> message, SharedNodePointer sendingNode);
 
 private:
     using Mutex = std::recursive_mutex;
@@ -53,6 +54,7 @@ private:
     AvatarTraits::AssociatedTraitValues<ClientTraitStatus, Unchanged> _traitStatuses;
 
     AvatarTraits::TraitVersion _currentTraitVersion { AvatarTraits::DEFAULT_TRAIT_VERSION };
+    AvatarTraits::TraitVersion _ackedTraitVersion{ AvatarTraits::DEFAULT_TRAIT_VERSION };
     AvatarTraits::TraitVersion _currentSkeletonVersion { AvatarTraits::NULL_TRAIT_VERSION };
     
     bool _shouldPerformInitialSend { false };

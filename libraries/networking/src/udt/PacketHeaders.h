@@ -134,6 +134,7 @@ public:
         BulkAvatarTraits,
         AudioSoloRequest,
         BulkAvatarTraitsAck,
+        SetAvatarTraitsAck,
         NUM_PACKET_TYPE
     };
 
@@ -311,7 +312,8 @@ enum class AvatarMixerPacketVersion : PacketVersion {
     JointTransScaled,
     GrabTraits,
     CollisionFlag,
-    AvatarTraitsAck
+    BulkAvatarTraitsAck,
+    SetAvatarTraitsAck
 };
 
 enum class DomainConnectRequestVersion : PacketVersion {

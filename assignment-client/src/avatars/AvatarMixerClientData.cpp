@@ -102,6 +102,12 @@ void AvatarMixerClientData::processSetTraitsMessage(ReceivedMessage& message,
     AvatarTraits::TraitVersion packetTraitVersion;
     message.readPrimitive(&packetTraitVersion);
 
+    // let the client know we received this packet
+    auto traitsAckPacket = NLPacket::create(PacketType::SetAvatarTraitsAck, sizeof(AvatarTraits::TraitVersion), true);
+    traitsAckPacket->writePrimitive(packetTraitVersion);
+    auto nodeList = DependencyManager::get<NodeList>();
+    nodeList->sendPacket(std::move(traitsAckPacket), sendingNode);
+
     bool anyTraitsChanged = false;
 
     while (message.getBytesLeftToRead() > 0) {
