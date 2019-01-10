@@ -55,6 +55,7 @@ void ClientTraitsHandler::resetForNewMixer() {
 
     // re-set the current version to 0
     _currentTraitVersion = AvatarTraits::DEFAULT_TRAIT_VERSION;
+    _ackedTraitVersion = AvatarTraits::DEFAULT_TRAIT_VERSION;
 
     // mark that all traits should be sent next time
     _shouldPerformInitialSend = true;
