@@ -69,7 +69,7 @@ void ClientTraitsHandler::resetForNewMixer() {
 void ClientTraitsHandler::sendChangedTraitsToMixer() {
     std::unique_lock<Mutex> lock(_traitLock);
 
-    if (hasChangedTraits() || _shouldPerformInitialSend || (_currentTraitVersion == _ackedTraitVersion)) {
+    if ((hasChangedTraits() || _shouldPerformInitialSend) && (_currentTraitVersion == _ackedTraitVersion)) {
         // we have at least one changed trait to send
 
         auto nodeList = DependencyManager::get<NodeList>();
