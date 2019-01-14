@@ -313,6 +313,7 @@ enum class AvatarMixerPacketVersion : PacketVersion {
     GrabTraits,
     CollisionFlag,
     BulkAvatarTraitsAck,
+    FasterAvatarEntities,
     SetAvatarTraitsAck
 };
 
