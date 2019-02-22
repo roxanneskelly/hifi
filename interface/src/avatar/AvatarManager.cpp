@@ -720,7 +720,8 @@ RayToAvatarIntersectionResult AvatarManager::findRayIntersectionVector(const Pic
                     }
                 }
             }
-            if (pickAgainstMesh) {
+
+            if (avatar && rayAvatarResult._intersect && pickAgainstMesh) {
                 glm::vec3 localRayOrigin = avatar->worldToJointPoint(ray.origin, rayAvatarResult._intersectWithJoint);
                 glm::vec3 localRayPoint = avatar->worldToJointPoint(ray.origin + rayDirection, rayAvatarResult._intersectWithJoint);
 
