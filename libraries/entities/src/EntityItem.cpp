@@ -791,7 +791,7 @@ int EntityItem::readEntityDataFromBuffer(const unsigned char* data, int bytesLef
     bool otherOverwrites = overwriteLocalData && !weOwnSimulation;
     // calculate hasGrab once outside the lambda rather than calling it every time inside
     bool hasGrab = stillHasGrabAction();
-    auto shouldUpdate = [this, lastEdited, otherOverwrites, filterRejection, hasGrab](quint64 updatedTimestamp, bool valueChanged) {
+    auto shouldUpdate = [lastEdited, otherOverwrites, filterRejection, hasGrab](quint64 updatedTimestamp, bool valueChanged) {
         if (hasGrab) {
             return false;
         }
@@ -2023,9 +2023,10 @@ void EntityItem::setCollisionMask(uint16_t value) {
 
 void EntityItem::setDynamic(bool value) {
     if (getDynamic() != value) {
+        auto shapeType = getShapeType();
         withWriteLock([&] {
             // dynamic and STATIC_MESH are incompatible so we check for that case
-            if (value && getShapeType() == SHAPE_TYPE_STATIC_MESH) {
+            if (value && shapeType == SHAPE_TYPE_STATIC_MESH) {
                 if (_dynamic) {
                     _dynamic = false;
                     _flags |= Simulation::DIRTY_MOTION_TYPE;
