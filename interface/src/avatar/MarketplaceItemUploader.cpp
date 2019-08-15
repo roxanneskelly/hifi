@@ -188,14 +188,13 @@ void MarketplaceItemUploader::doUploadAvatar() {
     // TODO(huffman) add JSON escaping
     auto escapeJson = [](QString str) -> QString { return str; };
 
-    QString jsonString = "{\"marketplace_item\":{";
+    QString jsonString = "{\"bake\":true,\"marketplace_item\":{";
     jsonString += "\"title\":\"" + escapeJson(_title) + "\"";
 
     // Items cannot have their description updated after they have been submitted.
     if (creating) {
         jsonString += ",\"description\":\"" + escapeJson(_description) + "\"";
     }
-
     jsonString += ",\"root_file_key\":\"" + escapeJson(_rootFilename) + "\"";
     jsonString += ",\"category_ids\":[" + QStringLiteral("%1").arg(_categoryID) + "]";
     jsonString += ",\"license\":0";
